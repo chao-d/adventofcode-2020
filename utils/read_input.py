@@ -18,3 +18,16 @@ def to_origin_list():
         for line in f:
             lst.append(line.strip())
     return lst
+
+
+def to_list_by_emptyline():
+    lst = []
+    with open(input_name, 'r') as f:
+        curr = []
+        for line in f:
+            if line == '\n':
+                lst.append(' '.join(curr[:]))
+                curr.clear()
+            else:
+                curr.append(line.strip())
+    return lst
