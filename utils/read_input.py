@@ -30,4 +30,6 @@ def to_list_by_emptyline():
                 curr.clear()
             else:
                 curr.append(line.strip())
+    if curr:
+        lst.append(' '.join(curr[:]))
     return lst
