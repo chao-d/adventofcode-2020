@@ -1,7 +1,7 @@
 import os
 
 curr_basename = os.path.basename(os.getcwd())
-input_name = curr_basename + "in"
+input_name = curr_basename + ".in"
 
 
 def to_num_list():
