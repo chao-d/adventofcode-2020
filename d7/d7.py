@@ -1,4 +1,5 @@
 import utils.read_input as inp
+import queue
 
 lst = inp.to_origin_list()
 
@@ -83,3 +84,31 @@ def split_bag_count(entry):
 
 
 print(f'Part 1: {count_one_color("shiny gold")}')
+
+
+def count_contains(color):
+    mapping = {}
+    for ele in lst:
+        rule = parse_entry(ele)
+        mapping[rule[0]] = rule[1]
+
+    q = queue.SimpleQueue()
+
+    def bfs():
+        q.put((color, 1))
+        count = 0
+        while not q.empty():
+            curr = q.get()
+            count += curr[1]
+            if curr[0] not in mapping:
+                continue
+            other_bags = mapping[curr[0]]
+            for k, v in other_bags.items():
+                q.put((k, v * curr[1]))
+
+        return count - 1
+
+    return bfs()
+
+
+print(f'Part 2: {count_contains("shiny gold")}')
