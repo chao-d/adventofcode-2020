@@ -40,6 +40,47 @@ def face_after_turn(curr_face, direction, degree):
     return dirs[(index + sign * steps) % 4]
 
 
+def dest_loc_waypoint(ops):
+    ship_x, ship_y = 0, 0
+    w_x, w_y = 10, 1
+    for op in ops:
+        if op[0] == 'L' or op[0] == 'R':
+            w_x, w_y = waypoint_after_turn(w_x, w_y, op[0], op[1])
+        elif op[0] == 'F':
+            ship_x, ship_y = ship_x + op[1] * w_x, ship_y + op[1] * w_y
+        else:
+            if op[0] == 'E':
+                w_x += op[1]
+            elif op[0] == 'W':
+                w_x -= op[1]
+            elif op[0] == 'N':
+                w_y += op[1]
+            else:
+                w_y -= op[1]
+    return ship_x, ship_y
+
+
+def waypoint_after_turn(x, y, direction, degree):
+    if direction == 'R':
+        if degree == 90:
+            x, y = y, -x
+        elif degree == 180:
+            x, y = -x, -y
+        else:
+            x, y = -y, x
+    else:
+        if degree == 90:
+            x, y = -y, x
+        elif degree == 180:
+            x, y = -x, -y
+        else:
+            x, y = y, -x
+    return x, y
+
+
 if __name__ == "__main__":
     x, y = dest_loc(ops)
     print(f'Part 1: {abs(x) + abs(y)}')
+
+    ship_x, ship_y = dest_loc_waypoint(ops)
+    print(f'Part 2: {abs(ship_x) + abs(ship_y)}')
